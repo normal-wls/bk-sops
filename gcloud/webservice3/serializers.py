@@ -18,7 +18,6 @@ from tastypie.serializers import Serializer
 
 
 class AppSerializer(Serializer):
-
     def format_datetime(self, data):
         # translate to time in local timezone
         if timezone.is_aware(data):
