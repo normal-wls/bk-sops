@@ -23,6 +23,7 @@ from gcloud.webservice3.resources import (
     CommonProjectResource,
     LabelGroupModelResource,
     LabelModelResource,
+    UserProjectResource,
 )
 from gcloud.commons.template.resources import CommonTemplateResource, CommonTemplateSchemeResource
 from gcloud.tasktmpl3.resources import (
@@ -56,6 +57,7 @@ v3_api.register(PackageSourceResource())
 v3_api.register(SyncTaskResource())
 v3_api.register(LabelGroupModelResource())
 v3_api.register(LabelModelResource())
+v3_api.register(UserProjectResource())
 
 router = DefaultRouter()
 router.register(r"resource_config", views.ResourceConfigViewSet)
