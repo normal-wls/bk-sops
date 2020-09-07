@@ -13,6 +13,7 @@ specific language governing permissions and limitations under the License.
 
 from django.conf.urls import include, url
 from tastypie.api import Api
+from rest_framework.routers import DefaultRouter
 
 from gcloud.webservice3.resources import (
     BusinessResource,
@@ -21,12 +22,9 @@ from gcloud.webservice3.resources import (
     VariableModelResource,
     CommonProjectResource,
     LabelGroupModelResource,
-    LabelModelResource
+    LabelModelResource,
 )
-from gcloud.commons.template.resources import (
-    CommonTemplateResource,
-    CommonTemplateSchemeResource
-)
+from gcloud.commons.template.resources import CommonTemplateResource, CommonTemplateSchemeResource
 from gcloud.tasktmpl3.resources import (
     TaskTemplateResource,
     TemplateSchemeResource,
@@ -37,8 +35,9 @@ from gcloud.contrib.function.resources import FunctionTaskResource
 from gcloud.contrib.collection.resources import CollectionResources
 from gcloud.periodictask.resources import PeriodicTaskResource
 from gcloud.external_plugins.resources import PackageSourceResource, SyncTaskResource
+from gcloud.webservice3 import views
 
-v3_api = Api(api_name='v3')
+v3_api = Api(api_name="v3")
 v3_api.register(BusinessResource())
 v3_api.register(ProjectResource())
 v3_api.register(CommonProjectResource())
@@ -58,7 +57,11 @@ v3_api.register(SyncTaskResource())
 v3_api.register(LabelGroupModelResource())
 v3_api.register(LabelModelResource())
 
+router = DefaultRouter()
+router.register(r"resource_config", views.ResourceConfigViewSet)
+
 # Standard bits...
 urlpatterns = [
-    url(r'^api/', include(v3_api.urls)),
+    url(r"^api/", include(v3_api.urls)),
+    url(r"^api/v3/", include(router.urls)),
 ]

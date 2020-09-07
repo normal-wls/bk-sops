@@ -15,6 +15,9 @@ import datetime
 
 from django.utils import timezone
 from tastypie.serializers import Serializer
+from rest_framework import serializers
+
+from gcloud.core.models import ResourceConfig
 
 
 class AppSerializer(Serializer):
@@ -29,3 +32,9 @@ class AppSerializer(Serializer):
 
     def format_time(self, data):
         return datetime.time.strftime(data, "%H:%M:%S")
+
+
+class ResourceConfigSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResourceConfig
+        fields = "__all__"

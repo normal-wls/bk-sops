@@ -43,11 +43,12 @@ get_client_by_user = settings.ESB_GET_CLIENT_BY_USER
 def cc_search_object_attribute(request, obj_id, biz_cc_id, supplier_account):
     """
     @summary: 获取对象自定义属性
-    @param request:
+    @param request: all参数为True代表返回所有属性，False只返回可编辑属性
     @param biz_cc_id:
     @return:
     """
     client = get_client_by_user(request.user.username)
+    include_not_editable = request.GET.get("all", False)
     kwargs = {"bk_obj_id": obj_id, "bk_supplier_account": supplier_account}
     cc_result = client.cc.search_object_attribute(kwargs)
     if not cc_result["result"]:
@@ -58,7 +59,7 @@ def cc_search_object_attribute(request, obj_id, biz_cc_id, supplier_account):
 
     obj_property = []
     for item in cc_result["data"]:
-        if item["editable"]:
+        if include_not_editable or item["editable"]:
             obj_property.append({"value": item["bk_property_id"], "text": item["bk_property_name"]})
 
     return JsonResponse({"result": True, "data": obj_property})

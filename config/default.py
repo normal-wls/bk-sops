@@ -84,6 +84,7 @@ INSTALLED_APPS += (
     "version_log",
     "files",
     "corsheaders",
+    "rest_framework",
 )
 
 # 这里是默认的中间件，大部分情况下，不需要改动
