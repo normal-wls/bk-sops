@@ -13,8 +13,8 @@ specific language governing permissions and limitations under the License.
 
 
 import copy
-import ujson as json
 import jsonschema
+from django.db import transaction
 
 from pipeline.exceptions import PipelineException
 
@@ -269,11 +269,12 @@ class CreateTaskAPITest(APITest):
     @mock.patch(COMMONTEMPLATE_SELECT_RELATE, MagicMock(return_value=MockQuerySet()))
     @mock.patch(APIGW_CREATE_TASK_JSON_SCHEMA_VALIDATE, MagicMock())
     def test_create_task__without_app_code(self):
-        response = self.client.post(
-            path=self.url().format(template_id=TEST_TEMPLATE_ID, project_id=TEST_PROJECT_ID),
-            data=json.dumps({"constants": {}, "name": "test", "exclude_task_node_id": "exclude_task_node_id"}),
-            content_type="application/json",
-        )
+        with transaction.atomic():
+            response = self.client.post(
+                path=self.url().format(template_id=TEST_TEMPLATE_ID, project_id=TEST_PROJECT_ID),
+                data=json.dumps({"constants": {}, "name": "test", "exclude_task_node_id": "exclude_task_node_id"}),
+                content_type="application/json",
+            )
 
         data = json.loads(response.content)
 
