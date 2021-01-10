@@ -268,27 +268,9 @@ class CreateTaskAPITest(APITest):
     @mock.patch(COMMONTEMPLATE_SELECT_RELATE, MagicMock(return_value=MockQuerySet()))
     @mock.patch(APIGW_CREATE_TASK_JSON_SCHEMA_VALIDATE, MagicMock())
     def test_create_task__without_app_code(self):
-        response = self.client.post(
-            path=self.url().format(template_id=TEST_TEMPLATE_ID, project_id=TEST_PROJECT_ID),
-            data=json.dumps({"name": "name", "constants": {}, "exclude_task_node_id": "exclude_task_node_id"}),
-            content_type="application/json",
-        )
-
-        data = json.loads(response.content)
-
-        self.assertFalse(data["result"])
-        self.assertTrue("message" in data)
-
         # response = self.client.post(
         #     path=self.url().format(template_id=TEST_TEMPLATE_ID, project_id=TEST_PROJECT_ID),
-        #     data=json.dumps(
-        #         {
-        #             "constants": {},
-        #             "name": "test",
-        #             "exclude_task_node_id": "exclude_task_node_id",
-        #             "template_source": "common",
-        #         }
-        #     ),
+        #     data=json.dumps({"constants": {}, "name": "test", "exclude_task_node_id": "exclude_task_node_id", }),
         #     content_type="application/json",
         # )
         #
@@ -296,6 +278,24 @@ class CreateTaskAPITest(APITest):
         #
         # self.assertFalse(data["result"])
         # self.assertTrue("message" in data)
+
+        response = self.client.post(
+            path=self.url().format(template_id=TEST_TEMPLATE_ID, project_id=TEST_PROJECT_ID),
+            data=json.dumps(
+                {
+                    "constants": {},
+                    "name": "test",
+                    "exclude_task_node_id": "exclude_task_node_id",
+                    "template_source": "common",
+                }
+            ),
+            content_type="application/json",
+        )
+
+        data = json.loads(response.content)
+
+        self.assertFalse(data["result"])
+        self.assertTrue("message" in data)
 
     # @mock.patch(
     #     PROJECT_GET,
