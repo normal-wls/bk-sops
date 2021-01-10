@@ -140,11 +140,13 @@ def create_task(request, template_id, project_id):
             return JsonResponse({"result": False, "message": message, "code": err_code.UNKNOWN_ERROR.code})
     else:
         try:
-            data = TaskFlowInstance.objects.create_pipeline_instance_exclude_task_nodes(
+            result, data = TaskFlowInstance.objects.create_pipeline_instance_exclude_task_nodes(
                 tmpl, pipeline_instance_kwargs, params["constants"], params["exclude_task_nodes_id"],
             )
         except Exception as e:
             return JsonResponse({"result": False, "message": str(e), "code": err_code.UNKNOWN_ERROR.code})
+        if result is False:
+            return JsonResponse({"result": False, "message": str(data), "code": err_code.UNKNOWN_ERROR.code})
 
     task = TaskFlowInstance.objects.create(
         project=project,
