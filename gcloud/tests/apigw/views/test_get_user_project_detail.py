@@ -82,6 +82,7 @@ class GetUserProjectDetailAPITest(APITest):
         response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID))
 
         data = json.loads(response.content)
+        print(data)
 
         self.assertTrue(data["result"])
         self.assertEqual(data["code"], err_code.SUCCESS.code)
