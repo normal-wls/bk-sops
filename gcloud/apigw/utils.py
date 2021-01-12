@@ -41,7 +41,7 @@ def api_hash_key(*args, **kwargs):
                 request_params = str(sorted(params.items()))
             else:
                 break
-            request_tag = "path:{},user:{},params:{}".format(request.path, request.user.username, request_params)
+            request_tag = "path:{},params:{}".format(request.path, request_params)
             new_args = args[:idx] + (request_tag,) + args[idx + 1 :]
             break
 
