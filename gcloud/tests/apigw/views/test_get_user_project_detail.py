@@ -10,7 +10,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 """
-
+import sys
 
 import ujson as json
 
@@ -64,7 +64,6 @@ class GetUserProjectDetailAPITest(APITest):
             )
         ),
     )
-    @patch(API_HASH_KEY, MagicMock(return_value=tuple("test")))
     @patch(
         APIGW_GET_USER_PROJECT_DETAIL_GET_BUSINESS_DETAIL,
         MagicMock(
@@ -82,7 +81,7 @@ class GetUserProjectDetailAPITest(APITest):
         response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID))
 
         data = json.loads(response.content)
-        print(data)
+        sys.stdout.write(str(data))
 
         self.assertTrue(data["result"])
         self.assertEqual(data["code"], err_code.SUCCESS.code)
