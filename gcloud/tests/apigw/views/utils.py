@@ -69,7 +69,7 @@ class APITest(TestCase, metaclass=abc.ABCMeta):
                 )
             ),
         )
-        self.cache_decorator = patch(CACHED_DECORATOR, MagicMock(return_value=dummy_wrapper))
+        self.cache_decorator = patch(CACHED_DECORATOR, MagicMock(return_value=dummy_params_wrapper))
 
         self.white_list_patcher.start()
         self.get_user_model_patcher.start()
