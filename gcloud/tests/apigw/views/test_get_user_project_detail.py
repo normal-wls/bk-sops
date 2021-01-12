@@ -40,16 +40,12 @@ class GetUserProjectDetailAPITest(APITest):
         PROJECT_GET,
         MagicMock(
             return_value=MockProject(
-                project_id=TEST_PROJECT_ID,
-                name=TEST_PROJECT_NAME,
-                bk_biz_id=TEST_BIZ_CC_ID,
-                from_cmdb=True,
+                project_id=TEST_PROJECT_ID, name=TEST_PROJECT_NAME, bk_biz_id=TEST_BIZ_CC_ID, from_cmdb=True,
             )
         ),
     )
     @patch(
-        APIGW_GET_USER_PROJECT_DETAIL_GET_BUSINESS_DETAIL,
-        MagicMock(side_effect=Exception()),
+        APIGW_GET_USER_PROJECT_DETAIL_GET_BUSINESS_DETAIL, MagicMock(side_effect=Exception()),
     )
     def test_get_user_project_detail__get_business_detail_raise(self):
         response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID))
@@ -64,13 +60,11 @@ class GetUserProjectDetailAPITest(APITest):
         PROJECT_GET,
         MagicMock(
             return_value=MockProject(
-                project_id=TEST_PROJECT_ID,
-                name=TEST_PROJECT_NAME,
-                bk_biz_id=TEST_BIZ_CC_ID,
-                from_cmdb=True,
+                project_id=TEST_PROJECT_ID, name=TEST_PROJECT_NAME, bk_biz_id=TEST_BIZ_CC_ID, from_cmdb=True,
             )
         ),
     )
+    @patch(API_HASH_KEY, MagicMock(return_value=tuple("test")))
     @patch(
         APIGW_GET_USER_PROJECT_DETAIL_GET_BUSINESS_DETAIL,
         MagicMock(
