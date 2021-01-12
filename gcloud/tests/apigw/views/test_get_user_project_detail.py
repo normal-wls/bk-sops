@@ -74,7 +74,7 @@ class GetUserProjectDetailAPITest(APITest):
         ),
     )
     def test_get_user_project_detail__success(self):
-        response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID) + "/?test=true")
+        response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID))
 
         data = json.loads(response.content)
 
