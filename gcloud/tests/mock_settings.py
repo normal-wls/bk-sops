@@ -104,4 +104,4 @@ PIPELINE_TEMPLATE_WEB_WRAPPER_UNFOLD_SUBPROCESS = "pipeline_web.wrapper.Pipeline
 
 PROJECT_RESOURCE_BATCH_REGISTER_INSTANCE = "gcloud.core.permissions.project_resource.batch_register_instance"
 
-CACHED_DECORATOR = "cachetools.decorators.cached"
+CACHED_DECORATOR = "cachetools.cached"
