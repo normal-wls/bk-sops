@@ -10,7 +10,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 """
-import ujson as json
+# import ujson as json
 from cachetools.keys import hashkey
 from django.core.handlers.wsgi import WSGIRequest
 
@@ -34,19 +34,19 @@ def api_hash_key(*args, **kwargs):
     for idx, arg in enumerate(args):
         if isinstance(arg, WSGIRequest):
             request = arg
-            if request.method == "GET":
-                request_params = str(sorted(request.GET.items()))
-            elif request.method == "POST":
-                params = json.loads(request.body)
-                request_params = str(sorted(params.items()))
-            else:
-                break
-            request_tag = "path:{},params:{}".format(request.path, request_params)
-            # user = getattr(request, "user")
-            # if user:
-            #     request_tag = "path:{},user:{},params:{}".format(request.path, user.username, request_params)
+            # if request.method == "GET":
+            #     request_params = str(sorted(request.GET.items()))
+            # elif request.method == "POST":
+            #     params = json.loads(request.body)
+            #     request_params = str(sorted(params.items()))
             # else:
-            #     request_tag = "path:{},params:{}".format(request.path, request_params)
+            #     break
+            request_params = "test"
+            user = getattr(request, "user")
+            if user:
+                request_tag = "path:{},user:{},params:{}".format(request.path, user.username, request_params)
+            else:
+                request_tag = "path:{},params:{}".format(request.path, request_params)
             new_args = args[:idx] + (request_tag,) + args[idx + 1 :]
             break
 
