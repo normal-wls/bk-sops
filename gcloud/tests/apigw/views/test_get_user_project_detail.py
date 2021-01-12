@@ -16,10 +16,9 @@ from gcloud.tests.mock import *  # noqa
 from gcloud.tests.mock_settings import *  # noqa
 from gcloud import err_code
 
-from .utils import APITest, dummy_params_wrapper
+from .utils import APITest
 
 TEST_PROJECT_ID = "1"
-TEST_PROJECT_ID2 = "2"
 TEST_PROJECT_NAME = "name"
 TEST_BIZ_CC_ID = "2"
 TEST_BIZ_NAME = "biz_name"
@@ -57,11 +56,10 @@ class GetUserProjectDetailAPITest(APITest):
         PROJECT_GET,
         MagicMock(
             return_value=MockProject(
-                project_id=TEST_PROJECT_ID2, name=TEST_PROJECT_NAME, bk_biz_id=TEST_BIZ_CC_ID, from_cmdb=True,
+                project_id=TEST_PROJECT_ID, name=TEST_PROJECT_NAME, bk_biz_id=TEST_BIZ_CC_ID, from_cmdb=True,
             )
         ),
     )
-    @patch(CACHED_DECORATOR, MagicMock(return_value=dummy_params_wrapper))
     @patch(
         APIGW_GET_USER_PROJECT_DETAIL_GET_BUSINESS_DETAIL,
         MagicMock(
@@ -76,7 +74,7 @@ class GetUserProjectDetailAPITest(APITest):
         ),
     )
     def test_get_user_project_detail__success(self):
-        response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID2))
+        response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID))
 
         data = json.loads(response.content)
 
@@ -85,7 +83,7 @@ class GetUserProjectDetailAPITest(APITest):
         self.assertEqual(
             data["data"],
             {
-                "project_id": TEST_PROJECT_ID2,
+                "project_id": TEST_PROJECT_ID,
                 "project_name": TEST_PROJECT_NAME,
                 "from_cmdb": True,
                 "bk_biz_id": TEST_BIZ_CC_ID,
