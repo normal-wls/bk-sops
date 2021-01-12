@@ -104,4 +104,4 @@ PIPELINE_TEMPLATE_WEB_WRAPPER_UNFOLD_SUBPROCESS = "pipeline_web.wrapper.Pipeline
 
 PROJECT_RESOURCE_BATCH_REGISTER_INSTANCE = "gcloud.core.permissions.project_resource.batch_register_instance"
 
-API_HASH_KEY = "gcloud.apigw.utils.api_hash_key"
+API_HASH_KEY = "gcloud.apigw.views.get_user_project_detail.api_hash_key"
