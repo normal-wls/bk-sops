@@ -10,10 +10,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 """
-import sys
-
-import ujson as json
-
 from pipeline.utils.collections import FancyDict
 
 from gcloud.tests.mock import *  # noqa
@@ -78,10 +74,9 @@ class GetUserProjectDetailAPITest(APITest):
         ),
     )
     def test_get_user_project_detail__success(self):
-        response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID))
+        response = self.client.get(path=self.url().format(project_id=TEST_PROJECT_ID) + "/?test=true")
 
         data = json.loads(response.content)
-        sys.stdout.write(str(data))
 
         self.assertTrue(data["result"])
         self.assertEqual(data["code"], err_code.SUCCESS.code)
