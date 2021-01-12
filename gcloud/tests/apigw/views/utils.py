@@ -69,13 +69,11 @@ class APITest(TestCase, metaclass=abc.ABCMeta):
                 )
             ),
         )
-        self.cache_decorator = patch(CACHED_DECORATOR, MagicMock(return_value=dummy_params_wrapper))
 
         self.white_list_patcher.start()
         self.get_user_model_patcher.start()
         self.project_filter_patcher.start()
         self.bkoauth_decorator_jwt_client.start()
-        self.cache_decorator.start()
 
         self.client = Client()
 
@@ -84,7 +82,6 @@ class APITest(TestCase, metaclass=abc.ABCMeta):
         self.get_user_model_patcher.stop()
         self.project_filter_patcher.stop()
         self.bkoauth_decorator_jwt_client.stop()
-        self.cache_decorator.stop()
 
     @abc.abstractmethod
     def url(self):

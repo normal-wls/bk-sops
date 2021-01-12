@@ -16,7 +16,7 @@ from gcloud.tests.mock import *  # noqa
 from gcloud.tests.mock_settings import *  # noqa
 from gcloud import err_code
 
-from .utils import APITest
+from .utils import APITest, dummy_params_wrapper
 
 TEST_PROJECT_ID = "1"
 TEST_PROJECT_NAME = "name"
@@ -60,6 +60,7 @@ class GetUserProjectDetailAPITest(APITest):
             )
         ),
     )
+    @patch(CACHED_DECORATOR, MagicMock(return_value=dummy_params_wrapper))
     @patch(
         APIGW_GET_USER_PROJECT_DETAIL_GET_BUSINESS_DETAIL,
         MagicMock(
