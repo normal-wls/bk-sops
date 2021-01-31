@@ -17,7 +17,7 @@
 
 | 字段          |  类型       | 必选   |  描述             |
 |---------------|------------|--------|------------------|
-|   project_id  |   int      |   是   |  项目ID           |
+|   bk_biz_id    |   string     |   是   |  模板所属业务ID |
 |   name        |   string   |   是   |  任务名称         |
 |   pipeline_tree | dict     |   是   |  任务实例树，详细信息请见下面说明 |
 |   has_common_subprocess | bool | 否 |  所包含的子流程来源，true：来自公共流程模版，false：来自项目流程模版，默认值为false |

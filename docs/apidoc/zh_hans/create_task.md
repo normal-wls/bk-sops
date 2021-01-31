@@ -41,6 +41,7 @@
     "bk_app_code": "esb_test",
     "bk_app_secret": "xxx",
     "bk_token": "xxx",
+    "template_id": "1",
     "name": "tasktest",
     "flow_type": "common",
     "constants": {

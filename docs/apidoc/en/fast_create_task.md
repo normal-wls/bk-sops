@@ -17,7 +17,7 @@ Create onetime task quickly
 
 | Field         |  Type      | Required |  Description     |
 |---------------|------------|----------|------------------|
-|   project_id  |   int      |  YES     |  the project ID  |
+|   bk_biz_id    |   string     |   YES   |  the business ID |
 |   name        |   string   |  YES     |  task name       |
 |   pipeline_tree | dict     |  NO      |  task pipeline tree, details are described below |
 |   has_common_subprocess | bool | NO |  the template type of the subprocess in the task，true：common template，false：project based task template. Default is false. |
@@ -148,10 +148,10 @@ KEY of global variables, the format is "${key}"
 
 ```
 {
-    "project_id": "1",
     "bk_app_code": "esb_test",
     "bk_app_secret": "xxx",
     "bk_token": "xxx",
+    "bk_biz_id": "2",
     "name": "tasktest",
     "flow_type": "common",
     "pipeline_tree": {

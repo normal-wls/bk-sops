@@ -41,6 +41,7 @@ constant value, the type of value should be same with data from API[get_template
     "bk_app_code": "esb_test",
     "bk_app_secret": "xxx",
     "bk_token": "xxx",
+    "template_id": "1",
     "name": "tasktest",
     "flow_type": "common",
     "constants": {
