@@ -13,13 +13,17 @@ specific language governing permissions and limitations under the License.
 from cachetools import cached, TTLCache
 from django.views.decorators.http import require_GET
 
+from iam import Resource
 from blueapps.account.decorators import login_exempt
+
 from gcloud import err_code
 from gcloud.apigw.decorators import mark_request_whether_is_trust, return_json_response
 from gcloud.apigw.decorators import project_inject
 from gcloud.apigw.utils import api_hash_key
 from gcloud.core.utils import get_user_business_detail as get_business_detail
 from gcloud.apigw.views.utils import logger
+from gcloud.iam_auth.utils import get_resources_allowed_actions_for_user
+from gcloud.iam_auth.conf import IAMMeta, PROJECT_ACTIONS
 from gcloud.iam_auth.intercept import iam_intercept
 from gcloud.iam_auth.view_interceptors.apigw import ProjectViewInterceptor
 from apigw_manager.apigw.decorators import apigw_require
@@ -46,6 +50,19 @@ def get_user_project_detail(request, project_id):
             "code": err_code.UNKNOWN_ERROR.code,
         }
 
+    project_allowed_actions = get_resources_allowed_actions_for_user(
+        username=request.user.username,
+        system_id=IAMMeta.SYSTEM_ID,
+        actions=PROJECT_ACTIONS,
+        resources_list=[
+            [
+                Resource(
+                    IAMMeta.SYSTEM_ID, IAMMeta.PROJECT_RESOURCE, str(request.project.id), {"name": request.project.name}
+                )
+            ]
+        ],
+    )
+
     return {
         "result": True,
         "data": {
@@ -58,6 +75,11 @@ def get_user_project_detail(request, project_id):
             "bk_biz_maintainer": biz_detail["bk_biz_maintainer"],
             "bk_biz_tester": biz_detail["bk_biz_tester"],
             "bk_biz_productor": biz_detail["bk_biz_productor"],
+            "auth_actions": [
+                action
+                for action, allowed in project_allowed_actions.get(str(request.project.id), {}).items()
+                if allowed
+            ],
         },
         "code": err_code.SUCCESS.code,
     }
